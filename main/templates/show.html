@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block head %}
+{% endblock %}
+
+{% block content %}
+
+<div>
+    <h1 class="display-3">BOOK-MARK</h1>
+    <br>
+    <div>
+        <button type="submit" class="btn btn-light">
+        <a href="{% url 'main:new'%}">CREATE</a></button>
+    </div>
+    <br>
+</div>
+
+<div>
+    {% if bookmarks %}
+    {% for bookmark in bookmarks %}
+    <div class="card ">
+        <h5 class="card-header">{{bookmark.site_name}}</h5>
+        <div class="card-body">
+            <h4 class="card-title">{{bookmark.site_url}}</h4>
+            <button class="btn btn-light">
+                <a href="{% url 'main:edit' bookmark.id %}" >edit</a>
+            </button>
+            <form action="{% url 'main:delete' bookmark.id %}" method='POST'>
+                {% csrf_token %}
+                <input type="submit" class="btn btn-light" value="delete">
+            </form>
+        </div>
+      </div>
+
+    {% endfor %}
+
+    {% else %}
+    <div>
+        <p>북마크가 비어있어요 CREATE 필요</p>
+    </div>
+    {% endif %}
+    
+</div>
+{% endblock %}
